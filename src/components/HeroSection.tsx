@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { WordsPullUp } from './WordsPullUp';
+import heroVid from '../data/hero-vid.mp4';
 
 interface HeroSectionProps {
   onOpenInquiry: () => void;
@@ -15,9 +16,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenInquiry }) => {
       <div className="relative w-full h-full rounded-2xl md:rounded-[2rem] overflow-hidden bg-black flex flex-col justify-between border border-white/10 shadow-2xl">
         
         {/* Background Video */}
+        {/*
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        */}
+
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          src={heroVid}
           autoPlay
           loop
           muted
