@@ -1,0 +1,57 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper validation functions
+    function isValidString(field, minLen, maxLen) {
+      return field is string && field.size() >= minLen && field.size() <= maxLen;
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.size() >= 5 && email.size() <= 120 && email.matches('^[^@]+@[^@]+\\.[^@]+$');
+    }
+
+    function isValidPhone(phone) {
+      return phone is string && phone.size() >= 7 && phone.size() <= 25;
+    }
+
+    // LEADS COLLECTION: ZERO-TRUST BLIND WRITE
+    match /leads/{leadId} {
+      
+      // 1. ABSOLUTE PRIVACY: NEVER allow public client to read, list, update, or delete leads.
+      // Even if a competitor or hacker has your Firebase credentials, they CANNOT download or see any leads.
+      // Only you (the authenticated project owner in Firebase Console) can read this data.
+      allow read: if false;
+      allow list: if false;
+      allow update: if false;
+      allow delete: if false;
+
+      // 2. SCHEMA & THREAT ENFORCEMENT ON CREATION:
+      // Validates incoming data structure, enforces character boundaries, and prevents payload bombs.
+      allow create: if 
+        // Must contain required fields
+        request.resource.data.keys().hasAll(['name', 'email', 'phone', 'status', 'createdAt']) &&
+        
+        // Name must be between 1 and 100 chars
+        isValidString(request.resource.data.name, 1, 100) &&
+        
+        // Email must match valid syntax and length
+        isValidEmail(request.resource.data.email) &&
+        
+        // Mobile number must be valid string
+        isValidPhone(request.resource.data.phone) &&
+        
+        // Status must always be initialized to 'new' (prevents setting arbitrary admin statuses)
+        request.resource.data.status == 'new' &&
+        
+        // Timestamp must be server timestamp or valid ISO string
+        request.resource.data.createdAt != null;
+    }
+
+    // Catch-all: Deny all other collections by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

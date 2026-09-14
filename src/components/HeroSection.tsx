@@ -49,9 +49,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenInquiry }) => {
             AUSTRALIA · DUBAI · HYDERABAD · NZ · UK
           </div>
 
-          <div className="ml-auto hidden md:block text-right">
-            <p className="text-[11px] tracking-widest uppercase text-white/50">Intelligence · Systems · Growth</p>
-            <p className="text-xs text-[#E59C69] font-medium tracking-wider">AUDIT. BUILD. MARKET. AUTOMATE.</p>
+          <div className="ml-auto hidden md:flex justify-end">
+            <div className="flex flex-col items-start gap-1.5">
+              <p className="text-[11px] tracking-widest uppercase text-white font-extrabold drop-shadow-xl leading-none z-10">Intelligence · Systems · Growth</p>
+              <p className="inline-block text-xs text-black bg-[#E59C69] font-black tracking-wider pt-0.5 pb-0.5 leading-none">AUDIT. BUILD. MARKET. AUTOMATE.</p>
+            </div>
           </div>
         </div>
 
@@ -72,7 +74,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenInquiry }) => {
             {/* Right 4 Columns: Description + CTA Button */}
             <div className="col-span-12 lg:col-span-4 flex flex-col justify-end gap-4 sm:gap-5 pb-2 md:pb-4 lg:pl-4">
               <motion.p
-                className="text-primary/70 text-xs sm:text-sm md:text-base leading-[1.25] font-normal"
+                className="text-[#E1E0CC] text-xs sm:text-sm md:text-base leading-[1.25] font-bold drop-shadow-xl"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
