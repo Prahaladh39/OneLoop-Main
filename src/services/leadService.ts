@@ -40,7 +40,7 @@ function checkRateLimit(): boolean {
     }
     localStorage.setItem(STORAGE_KEY, now.toString());
   } catch {
-    // localStorage might be blocked in private browsing — allow submission
+    // localStorage might be disabled in private browsing
   }
 
   return true;
@@ -51,11 +51,14 @@ function checkRateLimit(): boolean {
  */
 async function sendEmailAlert(
   sanitizedLead: Omit<LeadData, 'honeypot'>,
-  leadId: string
+  leadId?: string
 ): Promise<boolean> {
-  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  const accessKey =
+    import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ||
+    '389e9e2a-d10d-428d-abbb-9cd89098926b'; // Fallback ensures email never fails if env var is missing
+
   if (!accessKey) {
-    console.warn('[Web3Forms] Missing VITE_WEB3FORMS_ACCESS_KEY');
+    console.error('[Web3Forms] Missing access key');
     return false;
   }
 
@@ -74,7 +77,7 @@ async function sendEmailAlert(
       message: sanitizedLead.message || 'No additional details provided',
       source_form: sanitizedLead.source === 'audit_section' ? 'Main Audit Section' : 'Inquiry Modal',
       submitted_at: new Date().toLocaleString('en-US', { timeZoneName: 'short' }),
-      lead_id: leadId,
+      lead_id: leadId || 'pending',
     };
 
     const response = await fetch('https://api.web3forms.com/submit', {
@@ -98,15 +101,13 @@ async function sendEmailAlert(
 }
 
 /**
- * Submits lead with security guards:
- * - Anti-Bot Honeypot Trap
- * - Client Rate Limiting
- * - Strict Input Sanitization (XSS Defense)
- * - Write-Only Firestore Transaction
- * - Instant Web3Forms Email Alert
+ * Submits lead with dual-layer redundancy:
+ * 1. Writes to Firestore database
+ * 2. Sends instant email alert via Web3Forms
+ * Even if one layer encounters a network or rules issue, the other delivers the lead.
  */
 export async function submitLead(rawLead: LeadData): Promise<{ success: boolean; error?: string }> {
-  // 1. HONEYPOT CHECK: If invisible bot-trap is populated, silently drop
+  // 1. HONEYPOT CHECK: Drop automated bots silently
   if (rawLead.honeypot && rawLead.honeypot.trim().length > 0) {
     return { success: true };
   }
@@ -131,7 +132,7 @@ export async function submitLead(rawLead: LeadData): Promise<{ success: boolean;
     source: rawLead.source,
   };
 
-  // Basic validation check
+  // Validation
   if (!cleanLead.name || !cleanLead.email || !cleanLead.phone) {
     return {
       success: false,
@@ -139,23 +140,34 @@ export async function submitLead(rawLead: LeadData): Promise<{ success: boolean;
     };
   }
 
+  let dbSuccess = false;
+  let docId = '';
+
+  // 4. WRITE TO FIRESTORE
   try {
-    // 4. WRITE-ONLY FIRESTORE TRANSACTION
     const docRef = await addDoc(collection(db, 'leads'), {
       ...cleanLead,
       status: 'new',
       createdAt: serverTimestamp(),
       createdAtISO: new Date().toISOString(),
     });
-
-    // 5. EMAIL ALERT TO FOUNDER (awaits to ensure transmission)
-    await sendEmailAlert(cleanLead, docRef.id);
-
-    return { success: true };
-  } catch {
-    return {
-      success: false,
-      error: 'Unable to submit at this time. Please reach out to hello@oneloop.in directly.',
-    };
+    dbSuccess = true;
+    docId = docRef.id;
+  } catch (dbErr: any) {
+    console.error('[Firestore Write Error]', dbErr?.code || dbErr?.message, dbErr);
   }
+
+  // 5. ALWAYS DISPATCH EMAIL ALERT (Even if Firestore failed, you still get the customer inquiry)
+  const emailSuccess = await sendEmailAlert(cleanLead, docId);
+
+  // If either database or email succeeded, the lead was captured
+  if (dbSuccess || emailSuccess) {
+    return { success: true };
+  }
+
+  // Only fail if BOTH completely failed
+  return {
+    success: false,
+    error: 'Unable to submit at this time. Please reach out to hello@oneloop.in directly.',
+  };
 }
