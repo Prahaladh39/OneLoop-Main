@@ -55,10 +55,9 @@ async function sendEmailAlert(
 ): Promise<boolean> {
   const accessKey =
     import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ||
-    '389e9e2a-d10d-428d-abbb-9cd89098926b'; // Fallback ensures email never fails if env var is missing
+    '389e9e2a-d10d-428d-abbb-9cd89098926b';
 
   if (!accessKey) {
-    console.error('[Web3Forms] Missing access key');
     return false;
   }
 
@@ -80,7 +79,6 @@ async function sendEmailAlert(
       lead_id: leadId || 'pending',
     };
 
-    console.log('[Web3Forms] Submitting payload to https://api.web3forms.com/submit...');
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
@@ -91,13 +89,8 @@ async function sendEmailAlert(
     });
 
     const result = await response.json();
-    console.log('[Web3Forms] API Response:', result);
-    if (!result.success) {
-      console.error('[Web3Forms Error]', result);
-    }
     return result.success;
-  } catch (err) {
-    console.error('[Web3Forms Network Error]', err);
+  } catch {
     return false;
   }
 }
@@ -106,20 +99,15 @@ async function sendEmailAlert(
  * Submits lead with dual-layer redundancy:
  * 1. Writes to Firestore database
  * 2. Sends instant email alert via Web3Forms
- * Even if one layer encounters a network or rules issue, the other delivers the lead.
  */
 export async function submitLead(rawLead: LeadData): Promise<{ success: boolean; error?: string }> {
-  console.log('[OneLoop Lead] submitLead invoked with:', rawLead);
-
   // 1. HONEYPOT CHECK: Drop automated bots silently
   if (rawLead.honeypot && rawLead.honeypot.trim().length > 0) {
-    console.warn('[OneLoop Lead] Bot honeypot was filled, neutralizing submission silently.');
     return { success: true };
   }
 
   // 2. RATE LIMIT CHECK: Prevent flood attacks
   if (!checkRateLimit()) {
-    console.warn('[OneLoop Lead] Rate limit cooldown active (wait 10 seconds).');
     return {
       success: false,
       error: 'Please wait a few moments before submitting again.',
@@ -138,11 +126,8 @@ export async function submitLead(rawLead: LeadData): Promise<{ success: boolean;
     source: rawLead.source,
   };
 
-  console.log('[OneLoop Lead] Sanitized payload:', cleanLead);
-
   // Validation
   if (!cleanLead.name || !cleanLead.email || !cleanLead.phone) {
-    console.warn('[OneLoop Lead] Missing required fields after sanitization.');
     return {
       success: false,
       error: 'Please fill in all required fields.',
@@ -153,7 +138,6 @@ export async function submitLead(rawLead: LeadData): Promise<{ success: boolean;
   let docId = '';
 
   // 4. WRITE TO FIRESTORE
-  console.log('[OneLoop Lead] Step 1: Writing to Firestore collection "leads"...');
   try {
     const docRef = await addDoc(collection(db, 'leads'), {
       ...cleanLead,
@@ -163,22 +147,18 @@ export async function submitLead(rawLead: LeadData): Promise<{ success: boolean;
     });
     dbSuccess = true;
     docId = docRef.id;
-    console.log('[OneLoop Lead] Firestore write SUCCESS! Document ID:', docId);
-  } catch (dbErr: any) {
-    console.error('[OneLoop Lead] Firestore write FAILED:', dbErr?.code || dbErr?.message, dbErr);
+  } catch {
+    // Database write failed silently; email will capture the lead
   }
 
-  // 5. ALWAYS DISPATCH EMAIL ALERT (Even if Firestore failed, you still get the customer inquiry)
-  console.log('[OneLoop Lead] Step 2: Dispatching email notification via Web3Forms...');
+  // 5. ALWAYS DISPATCH EMAIL ALERT
   const emailSuccess = await sendEmailAlert(cleanLead, docId);
-  console.log('[OneLoop Lead] Email notification result:', emailSuccess ? 'SUCCESS' : 'FAILED');
 
   // If either database or email succeeded, the lead was captured
   if (dbSuccess || emailSuccess) {
     return { success: true };
   }
 
-  // Only fail if BOTH completely failed
   return {
     success: false,
     error: 'Unable to submit at this time. Please reach out to hello@oneloop.in directly.',

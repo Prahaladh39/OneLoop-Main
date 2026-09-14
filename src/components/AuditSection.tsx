@@ -153,7 +153,6 @@ export const AuditSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('[OneLoop Form] Submit button clicked. Current formData:', formData);
 
     // Validate all fields before submit
     const newErrors: Partial<Record<keyof FormDataState, string>> = {};
@@ -177,12 +176,8 @@ export const AuditSection: React.FC = () => {
     });
     setErrors(newErrors);
 
-    if (hasError) {
-      console.warn('[OneLoop Form] Submission blocked due to validation errors:', newErrors);
-      return;
-    }
+    if (hasError) return;
 
-    console.log('[OneLoop Form] Validation passed! Calling submitLead...');
     setSubmitError(null);
     setIsSubmitting(true);
     const result = await submitLead({
@@ -196,8 +191,6 @@ export const AuditSection: React.FC = () => {
       honeypot,
     });
     setIsSubmitting(false);
-
-    console.log('[OneLoop Form] submitLead result:', result);
 
     if (result.success) {
       setIsSubmitted(true);
