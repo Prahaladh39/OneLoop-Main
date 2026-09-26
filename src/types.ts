@@ -59,6 +59,7 @@ export interface SocialProofEntry {
   reviewer: string;
   featured: boolean;
   monogram: string;
+  logo?: string;
   highlightBadge?: string;
   location?: string;
 }

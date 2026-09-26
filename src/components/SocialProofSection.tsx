@@ -41,9 +41,24 @@ export const SocialProofSection: React.FC = () => {
           {/* Card Top: Minimal Brand Mark + Meta Tags */}
           <div className="flex items-start justify-between gap-3 mb-4">
             <div className="flex items-center gap-3">
-              {/* Minimalist Dark/Cream Brand Mark (No fake human photos) */}
-              <div className="w-11 h-11 rounded-xl bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-[#E1E0CC] font-mono font-bold text-xs tracking-wider shadow-inner group-hover:border-[#E59C69]/40 group-hover:text-[#E59C69] transition-colors">
-                {client.monogram}
+              {/* Brand Logo / Minimalist Mark */}
+              <div
+                className={`w-12 h-12 rounded-xl border flex items-center justify-center overflow-hidden shadow-inner transition-all duration-300 shrink-0 ${
+                  client.logo
+                    ? 'bg-white border-white/10 p-1 group-hover:border-[#E59C69]/50 group-hover:shadow-[0_0_15px_rgba(229,156,105,0.15)]'
+                    : 'bg-[#1A1A1A] border-white/10 text-[#E1E0CC] font-mono font-bold text-xs tracking-wider group-hover:border-[#E59C69]/40 group-hover:text-[#E59C69]'
+                }`}
+              >
+                {client.logo ? (
+                  <img
+                    src={client.logo}
+                    alt={`${client.name} logo`}
+                    className="w-full h-full object-contain rounded-lg"
+                    loading="lazy"
+                  />
+                ) : (
+                  client.monogram
+                )}
               </div>
 
               <div>

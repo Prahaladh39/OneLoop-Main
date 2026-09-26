@@ -11,6 +11,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'RD',
+    logo: '/images/clients/radaar.png',
     highlightBadge: 'Full-Stack Ecosystem',
     location: 'India'
   },
@@ -23,6 +24,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'CB',
+    logo: '/images/clients/cellbay.png',
     highlightBadge: 'Retail Scale',
     location: 'India'
   },
@@ -35,6 +37,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'XP',
+    logo: '/images/clients/xpacademy.png',
     highlightBadge: 'Growth Partner',
     location: 'Global'
   },
@@ -47,6 +50,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'AL',
+    logo: '/images/clients/antique-loft.png',
     highlightBadge: 'Live Commerce',
     location: 'India'
   },
@@ -59,6 +63,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'NV',
+    logo: '/images/clients/nirvaha.png',
     highlightBadge: 'Play Store Live',
     location: 'India'
   },
@@ -71,23 +76,12 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: true,
     monogram: 'BG',
+    logo: '/images/clients/bikers-gear.png',
     highlightBadge: 'UK Market Scale',
     location: 'United Kingdom'
   },
 
   // 18 Additional Clients (Revealed on expand)
-  {
-    id: 'groove9',
-    name: 'Groove9',
-    category: 'Café',
-    scope: 'Social growth & experiential branding',
-    quote: 'Footfall and local social discovery surged after OneLoop took over our campaigns and visual storytelling.',
-    reviewer: 'Verified Client',
-    featured: false,
-    monogram: 'G9',
-    highlightBadge: 'Brand Experience',
-    location: 'India'
-  },
   {
     id: 'dsl-virtue-mall',
     name: 'DSL Virtue Mall',
@@ -97,6 +91,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'DV',
+    logo: '/images/clients/dsl-virtue-mall.png',
     highlightBadge: 'Mall Ecosystem',
     location: 'India'
   },
@@ -109,6 +104,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'AP',
+    logo: '/images/clients/amr-planet-mall.png',
     highlightBadge: 'Retail Footfall',
     location: 'India'
   },
@@ -121,6 +117,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'NG',
+    logo: '/images/clients/next-galleria.png',
     highlightBadge: 'Continuous Growth',
     location: 'India'
   },
@@ -133,6 +130,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'HS',
+    logo: '/images/clients/hyderabad-smiles.png',
     highlightBadge: 'Healthcare Gen',
     location: 'India'
   },
@@ -169,6 +167,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'MC',
+    logo: '/images/clients/mirame.png',
     highlightBadge: 'Social Growth',
     location: 'India'
   },
@@ -181,6 +180,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'AK',
+    logo: '/images/clients/amyra.png',
     highlightBadge: 'Hospitality',
     location: 'India'
   },
@@ -205,20 +205,9 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'UJ',
+    logo: '/images/clients/uj-solutions.png',
     highlightBadge: 'Systems Automation',
     location: 'India'
-  },
-  {
-    id: 'stellar-reserve',
-    name: 'Stellar Reserve',
-    category: 'Hospitality',
-    scope: 'Luxury real estate & hospitality showcase',
-    quote: 'The digital portfolio platform captures the ultra-luxury essence of our properties, converting international high-net-worth inquiries.',
-    reviewer: 'Verified Client',
-    featured: false,
-    monogram: 'SR',
-    highlightBadge: 'Luxury Living',
-    location: 'Dubai'
   },
   {
     id: 'orbit',
@@ -253,6 +242,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'LF',
+    logo: '/images/clients/learn-french.png',
     highlightBadge: 'EdTech Portal',
     location: 'Global'
   },
@@ -265,6 +255,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'LN',
+    logo: '/images/clients/ln-sports-arena.png',
     highlightBadge: 'Sports Complex',
     location: 'India'
   },
@@ -277,6 +268,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'SL',
+    logo: '/images/clients/studlyf.png',
     highlightBadge: 'Campus Network',
     location: 'India'
   },
@@ -289,6 +281,7 @@ export const SOCIAL_PROOF_DATA: SocialProofEntry[] = [
     reviewer: 'Verified Client',
     featured: false,
     monogram: 'FW',
+    logo: '/images/clients/futuroworks.png',
     highlightBadge: 'Creative Ops',
     location: 'Global'
   }
