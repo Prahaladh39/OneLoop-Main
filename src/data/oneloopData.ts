@@ -197,13 +197,6 @@ export const TECH_PRODUCTS: TechProduct[] = [
     link: "https://github.com/Prahaladh39/DocOnCommit",
     badge: "Open Source"
   },
-  {
-    name: "Self-Correcting RAG",
-    category: "Enterprise AI & LLM Systems",
-    description: "Next-generation retrieval-augmented generation engine with active feedback loops and automated hallucination self-correction.",
-    link: "https://github.com/Prahaladh39/SelfCorrecting-Rag",
-    badge: "AI Repository"
-  }
 ];
 
 export const CLIENT_PORTFOLIO = {

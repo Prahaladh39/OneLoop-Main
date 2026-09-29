@@ -92,3 +92,65 @@ button, a {
 ::-webkit-scrollbar-thumb:hover {
   background: #E59C69;
 }
+
+/* Seamless Hardware-Accelerated Infinite Marquee Scroller */
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 42s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 46s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Responsive speed tuning for smaller viewports */
+@media (max-width: 640px) {
+  .animate-marquee-left {
+    animation-duration: 32s;
+  }
+  .animate-marquee-right {
+    animation-duration: 35s;
+  }
+}
+
+/* Pause marquee state */
+.pause-marquee,
+.group-marquee:hover .animate-marquee-left,
+.group-marquee:hover .animate-marquee-right {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none !important;
+    transform: none !important;
+  }
+}

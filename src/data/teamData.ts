@@ -27,7 +27,7 @@ export const FOUNDERS_DATA: FounderProfile[] = [
   {
     id: 'prahaladh',
     name: 'S.L.N Prahaladh',
-    title: 'Co-Founder — MERN Stack & AI Automation',
+    title: 'Co-Founder',
     bio: "Builds the automation and AI systems behind OneLoop's Automate loop — from custom AI pipelines to the workflows that keep client operations running without manual busywork.",
     photo: '/assets/team/prahaladh.jpg',
     linkedin: 'https://www.linkedin.com/in/slnprahaladh/',
