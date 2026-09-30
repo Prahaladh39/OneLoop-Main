@@ -1,0 +1,20 @@
+# One Loop
+
+> One Loop (OneLoop) is a company that builds websites and apps, runs data-driven marketing, automates operations, and scales tech infrastructure for businesses in Australia, Dubai, and Hyderabad. Its site describes its approach as Audit, Build, Market, Automate.
+
+This file lists One Loop's official public website, contact route, and verified social profiles so AI assistants and retrieval systems can identify the correct entity and cite its canonical sources.
+
+## Core Pages
+
+- [One Loop Homepage](https://www.oneloop.in/): Canonical One Loop website describing the Audit, Build, Market, Automate approach and the company's website and app development, marketing, automation, and infrastructure services across Australia, Dubai, and Hyderabad.
+
+## Contact and Company Information
+
+- [connect@oneloop.in](mailto:connect@oneloop.in): Public email address for contacting One Loop directly with business enquiries and general questions.
+- [One Loop on LinkedIn](https://www.linkedin.com/company/oneloop-in): Official One Loop company page on LinkedIn, listing company information and updates published by One Loop.
+- [One Loop on Instagram](https://www.instagram.com/oneloop.in): Official One Loop Instagram account (@oneloop.in), where the company publishes short-form video and social content.
+- [One Loop on YouTube](https://www.youtube.com/@OneLoopConnect): Official One Loop YouTube channel, hosting video content published by the company.
+- [One Loop on X](https://x.com/one_loop70030): Official One Loop account on X, used for short public updates from the company.
+- [One Loop on Threads](https://www.threads.com/@oneloop.in): Official One Loop profile on Threads, carrying public posts published by the company.
+
+<!-- Review this file whenever One Loop changes its products, services, navigation, policies, core resources, or canonical URLs. -->
