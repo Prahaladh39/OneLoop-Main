@@ -3,8 +3,17 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.oneloop.in/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Services & Capabilities Overview -->
+  <url>
+    <loc>https://www.oneloop.in/services</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>
+

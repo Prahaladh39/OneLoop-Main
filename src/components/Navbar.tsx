@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { OneLoopMark } from './OneLoopLogo';
@@ -10,6 +11,8 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,22 +35,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
   }, [mobileMenuOpen]);
 
   const navItems = [
-    { label: "Our story", href: "#about" },
-    { label: "Services", href: "#features" },
-    { label: "Results", href: "#results" },
-    { label: "Products", href: "#products" },
-    { label: "Clients", href: "#clients" },
-    { label: "Team", href: "#team" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Audit", href: "#audit", isPrimary: true }
+    { label: "Our story", href: "/#about", isAnchor: true, targetId: "#about" },
+    { label: "Services", href: "/services", isRoute: true },
+    { label: "Results", href: "/#results", isAnchor: true, targetId: "#results" },
+    { label: "Products", href: "/#products", isAnchor: true, targetId: "#products" },
+    { label: "Clients", href: "/#clients", isAnchor: true, targetId: "#clients" },
+    { label: "Team", href: "/#team", isAnchor: true, targetId: "#team" },
+    { label: "FAQ", href: "/#faq", isAnchor: true, targetId: "#faq" },
+    { label: "Audit", href: "/#audit", isPrimary: true, isAnchor: true, targetId: "#audit" }
   ];
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent, item: typeof navItems[0]) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+
+    if (item.isRoute) {
+      navigate(item.href);
+      return;
+    }
+
+    if (item.isAnchor) {
+      if (location.pathname === '/') {
+        const el = document.querySelector(item.targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        navigate('/' + item.targetId);
+      }
+    }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
     }
   };
 
@@ -63,8 +88,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
         >
           <div className="flex items-center gap-4 lg:gap-7">
             <a
-              href="#about"
-              onClick={(e) => scrollToSection(e, '#about')}
+              href="/"
+              onClick={handleLogoClick}
               className="flex items-center gap-2 mr-2 cursor-pointer group"
               title="OneLoop Home"
             >
@@ -72,12 +97,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
             </a>
 
             {navItems.map((item, idx) => {
+              const isServicesActive = item.isRoute && location.pathname === item.href;
+
               if (item.isPrimary) {
                 return (
                   <a
                     key={idx}
                     href={item.href}
-                    onClick={(e) => scrollToSection(e, item.href)}
+                    onClick={(e) => handleNavClick(e, item)}
                     className="min-h-[38px] flex items-center text-xs lg:text-sm font-semibold tracking-wide transition-all duration-200 px-4 py-1.5 rounded-full bg-[#E59C69] text-black hover:bg-[#FDC7A1] whitespace-nowrap cursor-pointer shadow-md shadow-[#E59C69]/20"
                   >
                     {item.label}
@@ -89,9 +116,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
                 <a
                   key={idx}
                   href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href!)}
-                  style={{ color: 'rgba(225, 224, 204, 0.8)' }}
-                  className="min-h-[38px] flex items-center text-xs lg:text-sm font-medium tracking-wide transition-colors duration-200 hover:!text-[#E1E0CC] whitespace-nowrap cursor-pointer hover:drop-shadow-[0_0_8px_rgba(229,156,105,0.4)]"
+                  onClick={(e) => handleNavClick(e, item)}
+                  style={{ color: isServicesActive ? '#E59C69' : 'rgba(225, 224, 204, 0.8)' }}
+                  className={`min-h-[38px] flex items-center text-xs lg:text-sm font-medium tracking-wide transition-colors duration-200 hover:!text-[#E1E0CC] whitespace-nowrap cursor-pointer hover:drop-shadow-[0_0_8px_rgba(229,156,105,0.4)] ${
+                    isServicesActive ? 'font-semibold !text-[#E59C69]' : ''
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -105,8 +134,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
           <div className="w-full bg-black/95 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2.5 flex items-center justify-between shadow-xl">
             {/* Logo */}
             <a
-              href="#about"
-              onClick={(e) => scrollToSection(e, '#about')}
+              href="/"
+              onClick={handleLogoClick}
               className="flex items-center gap-2.5 cursor-pointer"
             >
               <OneLoopMark className="w-7 h-7" />
@@ -118,8 +147,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
             {/* Quick Actions: Audit & Hamburger */}
             <div className="flex items-center gap-2">
               <a
-                href="#audit"
-                onClick={(e) => scrollToSection(e, '#audit')}
+                href="/#audit"
+                onClick={(e) => handleNavClick(e, navItems.find(i => i.isPrimary)!)}
                 className="px-3.5 py-1.5 min-h-[38px] flex items-center rounded-full bg-[#E59C69] text-black text-[11px] font-bold tracking-wide shadow-sm"
               >
                 Audit
@@ -166,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry: _onOpenInquiry })
                 <motion.a
                   key={idx}
                   href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
+                  onClick={(e) => handleNavClick(e, item)}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.04 }}

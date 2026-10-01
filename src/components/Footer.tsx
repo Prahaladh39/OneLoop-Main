@@ -31,10 +31,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
               Navigation
             </span>
             <ul className="space-y-2 text-xs text-gray-300">
-              <li><a href="#about" className="hover:text-[#E59C69] transition-colors">Our Story & Approach</a></li>
-              <li><a href="#features" className="hover:text-[#E59C69] transition-colors">Studio Workflows</a></li>
-              <li><a href="#results" className="hover:text-[#E59C69] transition-colors">Verified Results (ROAS)</a></li>
-              <li><a href="#products" className="hover:text-[#E59C69] transition-colors">Shipped Tech Products</a></li>
+              <li><a href="/#about" className="hover:text-[#E59C69] transition-colors">Our Story & Approach</a></li>
+              <li><a href="/services" className="hover:text-[#E59C69] text-[#E59C69] transition-colors font-medium">Services & Capabilities (All 6 Loops)</a></li>
+              <li><a href="/#features" className="hover:text-[#E59C69] transition-colors">Studio Workflows</a></li>
+              <li><a href="/#results" className="hover:text-[#E59C69] transition-colors">Verified Results (ROAS)</a></li>
+              <li><a href="/#products" className="hover:text-[#E59C69] transition-colors">Shipped Tech Products</a></li>
               <li>
                 <button
                   onClick={onOpenInquiry}

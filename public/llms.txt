@@ -7,6 +7,7 @@ This file lists One Loop's official public website, contact route, and verified 
 ## Core Pages
 
 - [One Loop Homepage](https://www.oneloop.in/): Canonical One Loop website describing the Audit, Build, Market, Automate approach and the company's website and app development, marketing, automation, and infrastructure services across Australia, Dubai, and Hyderabad.
+- [One Loop Services & Capabilities](https://www.oneloop.in/services): Comprehensive breakdown of One Loop's 6 growth loops including Web & App Development, High-ROAS Performance Marketing, Workflow & Process Automation, SaaS Scaling, Custom Software & AI, and Brand Systems.
 
 ## Contact and Company Information
 

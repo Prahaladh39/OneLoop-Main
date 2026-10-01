@@ -44,10 +44,16 @@ export interface ProcessStep {
 
 export interface ServiceCardData {
   id: string;
+  slug?: string;
   index: string;
   title: string;
   image: string;
   checklist: string[];
+  tagline?: string;
+  description?: string;
+  deliverables?: string[];
+  technologies?: string[];
+  outcomes?: string[];
 }
 
 export interface SocialProofEntry {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import { ONELOOP_SERVICES } from '../data/servicesData';
 import { OneLoopMark } from './OneLoopLogo';
@@ -114,6 +115,22 @@ export const FeaturesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Explore Full Dedicated Services Page CTA */}
+        <div className="mt-14 text-center">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 sm:p-2.5 sm:pr-6 rounded-2xl sm:rounded-full bg-[#111111] border border-white/10 hover:border-[#E59C69]/40 transition-colors shadow-xl">
+            <span className="text-xs sm:text-sm text-gray-300 font-light px-4">
+              Need detailed deliverables, tech stacks, and outcome metrics?
+            </span>
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E59C69] hover:bg-[#FDC7A1] text-black text-xs sm:text-sm font-semibold transition-all shadow-md shadow-[#E59C69]/20 group/btn"
+            >
+              <span>Explore Full Services & Capabilities</span>
+              <ArrowRight className="w-3.5 h-3.5 text-black group-hover/btn:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
 
       </div>
